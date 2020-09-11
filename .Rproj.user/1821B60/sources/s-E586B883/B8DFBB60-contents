@@ -1,0 +1,61 @@
+
+Rm_Emojis <- Vectorize(function(Sstring){
+  Sstring <- gsub("[^\x01-\x7F]", "", Sstring)
+  return(Sstring)
+})
+
+Rm_Hashtags <- Vectorize(function(Sstring){
+  
+  Sstring <- gsub("#[_a-zA-Z0-9]+", "", Sstring)
+  Sstring <- trimws(Sstring)
+  
+  return(Sstring)
+})
+
+Rm_Mentions <- Vectorize(function(Sstring){
+  
+  Sstring <- gsub("@[_a-zA-Z0-9]+", "", Sstring)
+  Sstring <- trimws(Sstring)
+  
+  return(Sstring)
+})
+
+Rm_Numbers <- Vectorize(function(Sstring){
+  Sstring <- gsub("[0-9]+", "", Sstring)
+  Sstring <- trimws(Sstring)
+  
+  return(Sstring)
+})
+
+Rm_Punctuation <- Vectorize(function(Sstring){
+  Sstring <- gsub("[!?.,:;]", "", Sstring)
+  Sstring <- trimws(Sstring)
+  
+  return(Sstring)
+})
+
+Rm_URLs <- Vectorize(function(Sstring){
+  
+  url_pattern <- "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+  
+  Sstring <- gsub(url_pattern, "", Sstring)
+  Sstring <- trimws(gsub("\\s+", " ", Sstring))
+  return(Sstring)
+})
+
+
+To_Lower <- Vectorize(function(Sstring){
+  Sstring <- tolower(Sstring)
+  return(Sstring)
+})
+
+
+## Only applicable to a df or tibble of word tokens
+
+To_Singular <- Vectorize(function(Sstring){
+  require(pluralize)
+  
+  Singularity <- singularize(Sstring)
+
+    return(Singularity)
+})
